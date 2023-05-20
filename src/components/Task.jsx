@@ -10,12 +10,12 @@ const style = {
   button: `cursor-pointer flex items-center`,
 };
 
-function Task(props) {
+function Task({ task }) {
   return (
     <li className={style.li}>
       <div className={style.row}>
         <input type="checkbox" />
-        <p className={style.text}>{props.text}</p>
+        <p className={style.text}>{task.text}</p>
       </div>
       <button>{<FaRegTrashAlt />}</button>
     </li>
@@ -24,7 +24,7 @@ function Task(props) {
 
 // Defined to remove the warning "'task' is missing in props validation" for props.task
 Task.propTypes = {
-  text: PropTypes.string.isRequired,
+  task: PropTypes.string.isRequired,
 };
 
 export default Task;

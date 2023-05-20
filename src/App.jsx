@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import Task from "./components/Task";
+import { db } from "./firebase";
+import { query, collection, onSnapshot } from "firebase/firestore";
 
 const style = {
   bg: `h-screen w-screen p-4 bg-gradient-to-r from-blue-500 to-blue-300`,
@@ -13,7 +15,21 @@ const style = {
 };
 
 function App() {
-  const [tasks, setTasks] = useState(["Task 1", "Task 2", "Task 3"]);
+  const [tasks, setTasks] = useState([]);
+
+  console.log("Here is some key: " + import.meta.env.VITE_SOME_KEY);
+
+  useEffect(() => {
+    const tasksQuery = query(collection(db, "tasks"));
+    const unsubscribe = onSnapshot(tasksQuery, querySnapshot => {
+      let tasksArray = [];
+      querySnapshot.forEach(doc => {
+        tasksArray.push({ ...doc.data(), id: doc.id });
+      });
+      setTasks(tasksArray);
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div className={style.bg}>
@@ -27,7 +43,7 @@ function App() {
         </form>
         <ul>
           {tasks.map((task, index) => (
-            <Task key={index} text={task} />
+            <Task key={index} task={task} />
           ))}
         </ul>
         <p className={style.count}>You have {tasks.length} tasks</p>
