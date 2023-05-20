@@ -24,6 +24,7 @@ function App() {
             <Task key={index} task={task} />
           ))}
         </ul>
+        <p className={style.count}>You have {tasks.length} tasks.</p>
       </div>
     </div>
   );
