@@ -84,7 +84,11 @@ function App() {
             <Task key={index} task={task} toggleComplete={toggleComplete} />
           ))}
         </ul>
-        <p className={style.count}>You have {tasks.length} tasks</p>
+        {tasks.length === 0 ? (
+          <p className={style.count}>You have no task</p>
+        ) : (
+          <p className={style.count}>You have {tasks.length} tasks</p>
+        )}
       </div>
     </div>
   );
