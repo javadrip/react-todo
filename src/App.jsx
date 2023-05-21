@@ -64,10 +64,17 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  // Update task in Firebase
+  // Update task completion in Firebase
   const toggleComplete = async task => {
     await updateDoc(doc(db, "tasks", task.id), {
       isComplete: !task.isComplete,
+    });
+  };
+
+  // Update task text in Firebase
+  const editTask = async task => {
+    await updateDoc(doc(db, "tasks", task.id), {
+      text: task.text,
     });
   };
 
@@ -103,6 +110,7 @@ function App() {
               task={task}
               toggleComplete={toggleComplete}
               deleteTask={deleteTask}
+              editTask={editTask}
             />
           ))}
         </ul>
@@ -122,13 +130,6 @@ function App() {
             You&apos;ve cleared all your 💩! You&apos;re on FAIARRR 🔥🔥🔥!
           </p>
         )}
-        {/* {tasks.length === 0 ? (
-          <p className={style.count}>You have no 💩. Add some 💩💩💩.</p>
-        ) : (
-          <p className={style.count}>
-            You have {outstandingTasks.length} outstanding 💩.
-          </p>
-        )} */}
       </div>
     </div>
   );
