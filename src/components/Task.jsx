@@ -10,9 +10,13 @@ const style = {
   button: `cursor-pointer flex items-center`,
 };
 
-function Task({ task, toggleComplete }) {
+function Task({ task, toggleComplete, deleteTask }) {
   const toggleCompleteHandler = () => {
     toggleComplete(task);
+  };
+
+  const deleteTaskHandler = () => {
+    deleteTask(task.id);
   };
 
   return (
@@ -30,7 +34,7 @@ function Task({ task, toggleComplete }) {
           {task.text}
         </p>
       </div>
-      <button>{<FaRegTrashAlt />}</button>
+      <button onClick={deleteTaskHandler}>{<FaRegTrashAlt />}</button>
     </li>
   );
 }
