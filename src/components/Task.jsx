@@ -3,11 +3,12 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { useState } from "react";
 
 const style = {
-  li: `flex justify-between bg-slate-200 p-4 my-2`,
-  liComplete: `flex justify-between bg-slate-400 p-4 my-2`,
-  row: `flex`,
-  text: `ml-2 cursor-pointer`,
-  textComplete: `ml-2 cursor-pointer line-through`,
+  li: `flex rounded justify-between bg-slate-200 p-4 my-2`,
+  liComplete: `flex rounded justify-between bg-slate-400 p-4 my-2`,
+  row: `flex items-center`,
+  checkbox: `rounded w-6 h-6 flex items-center focus:text-slate-500 focus:ring-blue-500 border-slate-400 text-slate-500`,
+  text: `ml-3 cursor-pointer rounded h-6 flex items-center`,
+  textComplete: `ml-3 cursor-pointer rounded h-6 flex items-center line-through`,
   button: `cursor-pointer flex items-center`,
 };
 
@@ -55,6 +56,7 @@ function Task({ task, toggleComplete, deleteTask, editTask }) {
           type="checkbox"
           onChange={toggleCompleteHandler}
           checked={task.isComplete ? "checked" : ""}
+          className={style.checkbox}
         />
         {isEditing ? (
           <input
