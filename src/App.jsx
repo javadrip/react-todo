@@ -25,11 +25,17 @@ const style = {
 function App() {
   const [tasks, setTasks] = useState([]);
   const [input, setInput] = useState("");
+  const [isUntouched, setIsUntouched] = useState(true);
 
   const inputHandler = e => {
     setInput(e.target.value);
   };
 
+  const inputClickHandler = () => {
+    if (tasks.length === 0) {
+      setIsUntouched(true);
+    }
+  };
   // Create task in Firebase
   const addTask = async e => {
     e.preventDefault();
@@ -42,6 +48,7 @@ function App() {
       isComplete: false,
     });
     setInput("");
+    setIsUntouched(false);
   };
 
   // Read tasks in Firebase
@@ -67,6 +74,7 @@ function App() {
   // Delete task in Firebase
   const deleteTask = async id => {
     await deleteDoc(doc(db, "tasks", id));
+    setIsUntouched(false);
   };
 
   const outstandingTasks = tasks.filter(task => !task.isComplete);
@@ -79,6 +87,7 @@ function App() {
           <input
             value={input}
             onChange={inputHandler}
+            onClick={inputClickHandler}
             className={style.input}
             type="text"
             placeholder="Add task"
@@ -97,13 +106,29 @@ function App() {
             />
           ))}
         </ul>
-        {tasks.length === 0 ? (
+        {tasks.length === 0 && isUntouched === true && (
+          <p className={style.count}>You have no 💩. Add some 💩💩💩.</p>
+        )}
+        {tasks.length > 0 && outstandingTasks.length > 0 && (
+          <p className={style.count}>
+            You have {outstandingTasks.length} outstanding 💩.
+          </p>
+        )}
+        {tasks.length > 0 && outstandingTasks.length === 0 && (
+          <p className={style.count}>You have no more outstanding 💩.</p>
+        )}
+        {tasks.length === 0 && isUntouched === false && (
+          <p className={style.count}>
+            You&apos;ve cleared all your 💩! You&apos;re on FAIARRR 🔥🔥🔥!
+          </p>
+        )}
+        {/* {tasks.length === 0 ? (
           <p className={style.count}>You have no 💩. Add some 💩💩💩.</p>
         ) : (
           <p className={style.count}>
             You have {outstandingTasks.length} outstanding 💩.
           </p>
-        )}
+        )} */}
       </div>
     </div>
   );
