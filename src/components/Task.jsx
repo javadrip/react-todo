@@ -1,4 +1,3 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
 import { FaRegTrashAlt } from "react-icons/fa";
 
@@ -11,18 +10,23 @@ const style = {
   button: `cursor-pointer flex items-center`,
 };
 
-function Task({ task }) {
-  const [isComplete, setIsComplete] = useState(false);
-
-  const checkboxHandler = () => {
-    setIsComplete(!isComplete);
+function Task({ task, toggleComplete }) {
+  const toggleCompleteHandler = () => {
+    toggleComplete(task);
   };
 
   return (
-    <li className={isComplete ? style.liComplete : style.li}>
+    <li className={task.isComplete ? style.liComplete : style.li}>
       <div className={style.row}>
-        <input type="checkbox" onChange={checkboxHandler} />
-        <p className={isComplete ? style.textComplete : style.text}>
+        <input
+          type="checkbox"
+          onChange={toggleCompleteHandler}
+          checked={task.isComplete ? "checked" : ""}
+        />
+        <p
+          className={task.isComplete ? style.textComplete : style.text}
+          onClick={toggleCompleteHandler}
+        >
           {task.text}
         </p>
       </div>
@@ -31,9 +35,9 @@ function Task({ task }) {
   );
 }
 
-// Defined to remove the warning "'task' is missing in props validation" for props.task
 Task.propTypes = {
-  task: PropTypes.string.isRequired,
+  task: PropTypes.object,
+  toggleComplete: PropTypes.func,
 };
 
 export default Task;
