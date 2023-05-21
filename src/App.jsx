@@ -6,6 +6,8 @@ import {
   query,
   collection,
   onSnapshot,
+  getDocs,
+  writeBatch,
   updateDoc,
   doc,
   addDoc,
@@ -30,6 +32,39 @@ function App() {
     setInput(e.target.value);
   };
 
+  // Delete all tasks in Firebase
+  const deleteAllTasks = async () => {
+    const tasksQuery = query(collection(db, "tasks"));
+    const querySnapshot = await getDocs(tasksQuery);
+    const batch = writeBatch(db);
+
+    querySnapshot.forEach(doc => {
+      batch.delete(doc.ref);
+    });
+
+    await batch.commit();
+  };
+
+  // Seed data into Firebase
+  const seedData = async () => {
+    console.log("Seeding data...");
+    await deleteAllTasks(); // Delete all existing tasks before seeding
+
+    const tasks = [
+      { text: "Try marking all tasks as done!", isComplete: false },
+      { text: "Try deleting all the tasks!", isComplete: false },
+      { text: "Have fun!", isComplete: false },
+    ];
+
+    for (const task of tasks) {
+      await addDoc(collection(db, "tasks"), task);
+    }
+  };
+
+  useEffect(() => {
+    seedData(); // Call the seedData function when the component mounts
+  }, []);
+
   // Create task in Firebase
   const addTask = async e => {
     e.preventDefault();
@@ -46,6 +81,7 @@ function App() {
 
   // Read tasks in Firebase
   useEffect(() => {
+    console.log("Reading tasks from Firebase...");
     const tasksQuery = query(collection(db, "tasks"));
     const unsubscribe = onSnapshot(tasksQuery, querySnapshot => {
       let tasksArray = [];
