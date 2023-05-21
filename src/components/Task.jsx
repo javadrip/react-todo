@@ -1,3 +1,4 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { FaRegTrashAlt } from "react-icons/fa";
 
@@ -11,11 +12,19 @@ const style = {
 };
 
 function Task({ task }) {
+  const [isComplete, setIsComplete] = useState(false);
+
+  const checkboxHandler = () => {
+    setIsComplete(!isComplete);
+  };
+
   return (
-    <li className={style.li}>
+    <li className={isComplete ? style.liComplete : style.li}>
       <div className={style.row}>
-        <input type="checkbox" />
-        <p className={style.text}>{task.text}</p>
+        <input type="checkbox" onChange={checkboxHandler} />
+        <p className={isComplete ? style.textComplete : style.text}>
+          {task.text}
+        </p>
       </div>
       <button>{<FaRegTrashAlt />}</button>
     </li>
