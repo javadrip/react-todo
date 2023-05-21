@@ -8,6 +8,7 @@ import {
   onSnapshot,
   updateDoc,
   doc,
+  addDoc,
 } from "firebase/firestore";
 
 const style = {
@@ -22,6 +23,25 @@ const style = {
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [input, setInput] = useState("");
+
+  const inputHandler = e => {
+    setInput(e.target.value);
+  };
+
+  // Create task in Firebase
+  const addTask = async e => {
+    e.preventDefault();
+    if (input === "") {
+      alert("Please enter a task");
+      return;
+    }
+    await addDoc(collection(db, "tasks"), {
+      text: input,
+      isComplete: false,
+    });
+    setInput("");
+  };
 
   // Read tasks in Firebase
   useEffect(() => {
@@ -41,15 +61,20 @@ function App() {
     await updateDoc(doc(db, "tasks", task.id), {
       isComplete: !task.isComplete,
     });
-    console.log(task.id);
   };
 
   return (
     <div className={style.bg}>
       <div className={style.container}>
         <h3 className={style.h3}>To-do App</h3>
-        <form className={style.form} action="">
-          <input className={style.input} type="text" placeholder="Add task" />
+        <form onSubmit={addTask} className={style.form} action="">
+          <input
+            value={input}
+            onChange={inputHandler}
+            className={style.input}
+            type="text"
+            placeholder="Add task"
+          />
           <button className={style.button}>
             <AiOutlinePlus size={30} />
           </button>
