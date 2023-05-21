@@ -51,9 +51,9 @@ function App() {
     await deleteAllTasks(); // Delete all existing tasks before seeding
 
     const tasks = [
-      { text: "Try marking all tasks as done!", isComplete: false },
+      { text: "Try marking all tasks as done!", isComplete: true },
       { text: "Try deleting all the tasks!", isComplete: false },
-      { text: "Have fun!", isComplete: false },
+      { text: "Try adding your own tasks!", isComplete: false },
     ];
 
     for (const task of tasks) {
