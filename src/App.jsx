@@ -15,10 +15,10 @@ import {
 const style = {
   bg: `h-screen w-screen p-4 bg-gradient-to-r from-blue-500 to-blue-300`,
   container: `bg-slate-100 max-w-[500px] w-full m-auto rounded-md shadow-xl p-4`,
-  h3: `text-3xl font-bold text-center text-gray-800 p-2`,
+  h1: `text-3xl font-bold text-center text-gray-800 p-4`,
   form: `flex justify-between`,
   input: `border p-2 w-full text-xl`,
-  button: `border p-4 ml-2 bg-purple-500 text-slate-100`,
+  button: `border p-4 ml-2 bg-purple-500 text-slate-100 rounded`,
   count: `text-center p-2`,
 };
 
@@ -69,10 +69,12 @@ function App() {
     await deleteDoc(doc(db, "tasks", id));
   };
 
+  const outstandingTasks = tasks.filter(task => !task.isComplete);
+
   return (
     <div className={style.bg}>
       <div className={style.container}>
-        <h3 className={style.h3}>To-do App</h3>
+        <h1 className={style.h1}>Get 💩 done</h1>
         <form onSubmit={addTask} className={style.form} action="">
           <input
             value={input}
@@ -96,9 +98,11 @@ function App() {
           ))}
         </ul>
         {tasks.length === 0 ? (
-          <p className={style.count}>You have no task</p>
+          <p className={style.count}>You have no 💩. Add some 💩💩💩.</p>
         ) : (
-          <p className={style.count}>You have {tasks.length} tasks</p>
+          <p className={style.count}>
+            You have {outstandingTasks.length} outstanding 💩.
+          </p>
         )}
       </div>
     </div>

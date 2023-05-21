@@ -2,8 +2,8 @@ import PropTypes from "prop-types";
 import { FaRegTrashAlt } from "react-icons/fa";
 
 const style = {
-  li: `flex justify-between bg-slate-200 p-4 my-2 capitalize`,
-  liComplete: `flex justify-between bg-slate-400 p-4 my-2 capitalize`,
+  li: `flex justify-between bg-slate-200 p-4 my-2`,
+  liComplete: `flex justify-between bg-slate-400 p-4 my-2`,
   row: `flex`,
   text: `ml-2 cursor-pointer`,
   textComplete: `ml-2 cursor-pointer line-through`,
@@ -42,6 +42,7 @@ function Task({ task, toggleComplete, deleteTask }) {
 Task.propTypes = {
   task: PropTypes.object,
   toggleComplete: PropTypes.func,
+  deleteTask: PropTypes.func,
 };
 
 export default Task;
