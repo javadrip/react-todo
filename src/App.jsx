@@ -13,6 +13,7 @@ import {
   addDoc,
   deleteDoc,
 } from "firebase/firestore";
+import Quote from "./components/Quote";
 
 const style = {
   bg: `h-screen w-screen p-4 bg-gradient-to-r from-blue-500 to-blue-300`,
@@ -154,6 +155,9 @@ function App() {
             You&apos;ve cleared all your 💩! You&apos;re on FAIARRR 🔥🔥🔥!
           </p>
         )}
+      </div>
+      <div>
+        <Quote />
       </div>
     </div>
   );
