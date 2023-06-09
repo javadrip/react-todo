@@ -53,7 +53,7 @@ function Quote() {
               <div className="flex justify-center">
                 <p className={style.quote}>{quote}</p>
               </div>
-              <div className="flex justify-end -mt-1">
+              <div className="-mt-1 flex justify-end">
                 <RiDoubleQuotesR size={15} />
               </div>
             </div>
