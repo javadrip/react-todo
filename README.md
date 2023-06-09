@@ -39,6 +39,7 @@ Before embarking on a project, it’s always good to consider what APIs are requ
 
 It's good enough as a functioning to-do app, but if I were to improve on it, I'll
 
+- Add sorting.
 - Fix the order of the seeded tasks.
 - Add drag-and-drop task reordering functionality.
 - Add a "delete all" button.
